@@ -52,14 +52,23 @@ export const login = async (req, res) => {
     // generate a cookie token and send to the user
     const age = 1000 * 60 * 60 * 24 * 7;
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: age,
-    });
+    const token = jwt.sign(
+      {
+        id: user.id,
+        isAdmin: false,
+      },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: age,
+      }
+    );
 
     if (!process.env.JWT_SECRET_KEY) {
       console.error("JWT_SECRET_KEY is not set in the environment variables");
       return res.status(500).json({ message: "Server configuration error" });
     }
+
+    const { password: userPassword, ...userInfo } = user;
 
     res
       .cookie("token", token, {
@@ -68,7 +77,7 @@ export const login = async (req, res) => {
         // secure: true,
       })
       .status(200)
-      .json({ message: "Login Successful" });
+      .json(userInfo);
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Failed to login", error: error.message });
