@@ -31,6 +31,7 @@ function Register() {
     } catch (error) {
       console.log(error);
       setError(error.response.data.message);
+      console.log(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
