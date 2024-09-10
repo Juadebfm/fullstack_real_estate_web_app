@@ -44,10 +44,10 @@ function NewPostPage() {
           restaurant: parseInt(inputs.restaurant),
         },
       });
-      navigate("/single" + res.data.id);
+      navigate("/" + res.data.id);
     } catch (err) {
       console.log(err);
-      setError(error);
+      setError(err.message || "There is an error with your code");
     }
   };
 
@@ -63,7 +63,7 @@ function NewPostPage() {
             </div>
             <div className="item">
               <label htmlFor="price">Price</label>
-              <input id="price" name="price" type="number" />
+              <input id="price" name="price" type="number" min={1} />
             </div>
             <div className="item">
               <label htmlFor="address">Address</label>
@@ -138,24 +138,22 @@ function NewPostPage() {
             </div>
             <div className="item">
               <label htmlFor="size">Total Size (sqft)</label>
-              <input min={0} id="size" name="size" type="number" />
+              <input min={1} id="size" name="size" type="number" />
             </div>
             <div className="item">
               <label htmlFor="school">School</label>
-              <input min={0} id="school" name="school" type="number" />
+              <input min={1} id="school" name="school" type="number" />
             </div>
             <div className="item">
               <label htmlFor="bus">bus</label>
-              <input min={0} id="bus" name="bus" type="number" />
+              <input min={1} id="bus" name="bus" type="number" />
             </div>
             <div className="item">
               <label htmlFor="restaurant">Restaurant</label>
-              <input min={0} id="restaurant" name="restaurant" type="number" />
+              <input min={1} id="restaurant" name="restaurant" type="number" />
             </div>
 
-            <button className="sendButton">
-              <Link to="/add">Add</Link>
-            </button>
+            <button className="sendButton">Add</button>
 
             {error && <span>error</span>}
           </form>
